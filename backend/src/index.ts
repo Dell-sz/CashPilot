@@ -1,19 +1,22 @@
-import express from 'express'
-import dotenv from 'dotenv'
-import cors from 'cors'
+import express, { Request, Response } from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-const app = express()
-app.use(cors())
-app.use(express.json())
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-const PORT = process.env.PORT || 3000
+app.use(cors());
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Servidor rodando com sucesso!')
-})
+// Rota Health Check
+app.get('/health', (_req: Request, res: Response) => {
+  return res.status(200).json({ status: 'OK' });
+});
+
+// (AQUI você poderá adicionar outras rotas, ex: auth, transactions, etc.)
 
 app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`)
-})
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
